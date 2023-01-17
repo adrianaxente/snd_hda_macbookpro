@@ -7,7 +7,7 @@ path="$(pwd)"
 echo "Current path is: $path"
 
 UNAME_V=$(uname -v)
-UNAME_R=$(uname -r)
+UNAME_R=$1 # From DKMS
 
 kernel_version=$(echo -n $UNAME_R | cut -d '-' -f1)  #ie 5.2.7
 
@@ -242,19 +242,17 @@ pushd $hda_dir
 
 if [ $major_version -eq 5 -a $minor_version -lt 13 ]; then
 
-	make PATCH_CIRRUS=1
-
-	make install PATCH_CIRRUS=1
+	make PATCH_CIRRUS=1 KVER=$UNAME_R
+	output=$hda_dir/snd-hda-codec-cirrus.ko
 
 else
 
-	make
-
-	make install
+	make KVER=$UNAME_R
+	output=$hda_dir/snd-hda-codec-cs8409.ko
 
 fi
 
 popd
 
-echo -e "\ncontents of $update_dir"
-ls -lA $update_dir
+echo "Copying $output to $path"
+cp $output $path

@@ -83,3 +83,19 @@ cd snd_hda_macbookpro/
 ./install.cirrus.driver.sh
 reboot
 ```
+
+**DKMS install**
+
+❗<span style="color:red"> This only works for kernel version >= 5.13 for the moment. </span> (Will be supported for older kernel versions in next releases)
+
+DKMS should automatically upgrade your module on each kernel upgrade.
+
+One-time setup:
+
+```
+git clone https://github.com/davidjo/snd_hda_macbookpro.git
+cd snd_hda_macbookpro/
+#run the following command as root or with sudo
+./install.cirrus.driver.dkms.sh
+reboot
+```
